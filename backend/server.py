@@ -132,12 +132,7 @@ api_router = APIRouter(prefix="/api")
 # -------------------------
 # Security Middleware
 # -------------------------
-app.add_middleware(
-    TrustedHostMiddleware,
-    allowed_hosts=os.environ.get(
-        "ALLOWED_HOSTS", "localhost,127.0.0.1"
-    ).split(","),
-)
+# (TrustedHostMiddleware removed for Vercel deployment flexibility)
 
 allowed_origins = os.environ.get(
     "CORS_ORIGINS", "http://localhost:3000"
@@ -437,7 +432,7 @@ async def add_security_headers(request: Request, call_next):
     response.headers["Strict-Transport-Security"] = (
         "max-age=631138519; includeSubDomains"
     )
-    response.headers["Content-Security-Policy"] = "default-src 'self'"
+    # response.headers["Content-Security-Policy"] = "default-src 'self'"
     return response
 
 # -------------------------
